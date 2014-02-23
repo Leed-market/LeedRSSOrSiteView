@@ -5,6 +5,6 @@
 
     $rss_or_feed_view = new RSSOrFeedView();
     $update = $rss_or_feed_view->setView($_GET['id'], $_GET['view']);
-    return $update;
+    echo json_encode($update);
 
 ?>
