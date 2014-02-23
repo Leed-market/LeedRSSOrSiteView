@@ -8,20 +8,12 @@
 @description Allow us to choose the view (RSS or website) for each feed
 */
 
-function getView($feed_id) {
-    $result = mysql_query('
-        SELECT id, view FROM `'.MYSQL_PREFIX.'plugin_leedrssorsiteview`
-        WHERE `id` = ' . $feed_id . '
-    ');
-    
-    if($result) {
-        $row = mysql_fetch_assoc($result);
-        return $row['view'];
-    }
-}
+include( __DIR__ . '/classes/RSSOrSiteView.php' );
+include( __DIR__ . '/common.php' );
 
 function leedrssorsiteview_plugin_getView(&$event) {
-    $event->view = getView($event->getFeed());
+    $rss_or_feed_view = new RSSOrFeedView();
+    $event->view = $rss_or_feed_view->getView($event->getFeed());
 }
 
 //Plugin::addJs("/js/script.js");
