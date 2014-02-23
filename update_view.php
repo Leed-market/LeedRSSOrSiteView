@@ -1,14 +1,10 @@
 <?php
 
     require_once( __DIR__ . '/../../common.php');
-    require_once( __DIR__ . '/common.php');
+    require_once( __DIR__ . '/classes/RSSOrSiteView.php');
 
-    $result = mysql_query('
-        UPDATE ' . MYSQL_PREFIX . LEEDRSSORSITEVIEW_TABLE . ' 
-        SET `view`="' . $_GET['view'] . '"
-        WHERE `id`="' . $_GET['id'] . '";
-    ');
-
-    return $result ? true : false;
+    $rss_or_feed_view = new RSSOrFeedView();
+    $update = $rss_or_feed_view->setView($_GET['id'], $_GET['view']);
+    return $update;
 
 ?>

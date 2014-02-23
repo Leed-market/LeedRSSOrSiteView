@@ -9,7 +9,6 @@
 */
 
 include( __DIR__ . '/classes/RSSOrSiteView.php' );
-include( __DIR__ . '/common.php' );
 
 function leedrssorsiteview_plugin_getView(&$event) {
     $rss_or_feed_view = new RSSOrFeedView();
