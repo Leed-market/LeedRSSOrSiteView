@@ -27,14 +27,17 @@ function switchView(element) {
 }
 
 // Create the site iframe
-function toggleWebsite( element ) {
+function toggleWebsite( element, callback ) {
     var entry = element.parents('.js-feed__entry'),
         articleContent = entry.find('.js-article__content');
     if( articleContent.not(':has(iframe)').length ) {
         entry.addClass('article__content--website js-website');
-        entry.find('.js-article__content--rss').addClass('hidden');
-        if( entry.hasClass('js-focus') )
+        entry.find('.js-article__content--rss').remove();
+        if( entry.hasClass('js-focus') ) {
             jQuery('<iframe frameborder="0" src="' + articleContent.data('article-url') + '" style="width: 100%; height: 100%;" />').appendTo( articleContent );
+            if( typeof( callback ) == "function" )
+                callback();
+        }
     } else {
         articleContent.children('iframe').remove();
     }
@@ -49,18 +52,23 @@ function toggleRSS( element ) {
     if( contentIframe.length > 0 )
         contentIframe.remove();
     
-    content.find( '.js-article__content--rss' ).removeClass('hidden');
     entry.removeClass('article__content--website js-website');
 }
 
 // [todo] - Create a general object to avoid these repetitive node switches
 function toggleView( element, view ) {
-    $( '[data-feed-id="' + element.parents('.js-feed__entry').data('feed-id') + '"]' ).each(function() {
+    var entry = element.parents('.js-feed__entry');
+
+    $( '[data-feed-id="' + entry.data('feed-id') + '"]' ).each(function() {
         if( view == 1 ) {
             toggleWebsite( $(this).children() );
         } else {
             toggleRSS( $(this).children() );
         }
     });
+    
+    if( view == 0 ) {
+        toggleContent( entry.data('id'), element );
+    }
 }
 
