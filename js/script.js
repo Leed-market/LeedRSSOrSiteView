@@ -3,6 +3,16 @@ $('document').ready(function(){
         event.preventDefault();
         switchView( $(this) );
     });
+
+    var sheets = document.styleSheets,
+        firstSheet = document.styleSheets[0],
+        iframeHeight = $(window).height() - $('.article__header').height() - 20;
+    addCSSRule(
+        firstSheet,
+        ".article__content--website .article__content",
+        "height: " + iframeHeight + "px"
+    );
+
 });
 
 function switchView(element) {
@@ -72,3 +82,18 @@ function toggleView( element, view ) {
     }
 }
 
+//
+// TOOLS
+//
+function addCSSRule(sheet, selector, rules, index) {
+    if( index === undefined ) {
+        index = sheet.cssRules.length;
+    }
+
+    if("insertRule" in sheet) {
+        sheet.insertRule(selector + "{" + rules + "}", index);
+    }
+    else if("addRule" in sheet) {
+        sheet.addRule(selector, rules, index);
+    }
+}
