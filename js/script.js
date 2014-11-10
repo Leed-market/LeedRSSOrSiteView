@@ -1,7 +1,7 @@
 $('document').ready(function(){
     $( '.wrapper' ).on( 'click', '.js-switch-view', function( event ) {
         event.preventDefault();
-        switchView( $(this) );
+        switchFeedView( $(this) );
     });
 
     var sheets = document.styleSheets,
@@ -15,7 +15,7 @@ $('document').ready(function(){
 
 });
 
-function switchView(element) {
+function switchFeedView(element) {
     var newRssOrSiteView = + ! element.data('view'),
         entry = element.parents('.js-feed__entry');
 
