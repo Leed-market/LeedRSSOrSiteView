@@ -15,6 +15,7 @@ function leedrssorsiteview_plugin_getView(&$event) {
     $event->view = $rss_or_feed_view->getView($event->getFeed());
 }
 
+Plugin::addCss("/css/style.css");
 Plugin::addJs("/js/script.js");
 
 Plugin::addHook("event_pre_section", "leedrssorsiteview_plugin_getView");

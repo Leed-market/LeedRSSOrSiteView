@@ -1,0 +1,34 @@
+/* line 3, ../sass/style.scss */
+.iframe-loader {
+  position: absolute;
+  left: 47%;
+  top: 40%;
+  -moz-animation: iframe-loading 3s infinite;
+  -webkit-animation: iframe-loading 3s infinite;
+  animation: iframe-loading 3s infinite;
+}
+
+@-moz-keyframes iframe-loading {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes iframe-loading {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes iframe-loading {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
