@@ -40,34 +40,42 @@ function switchFeedView(element) {
 function toggleWebsite( element, callback ) {
     var entry = element.parents('.js-feed__entry'),
         articleContent = entry.find('.js-article__content');
-    if( articleContent.not(':has(iframe)').length ) {
-        entry.addClass('article__content--website js-website');
-        entry.find('.js-article__content--rss').remove();
-        if( entry.hasClass('js-focus') ) {
-            jQuery('<iframe frameborder="0" src="' + articleContent.data('article-url') + '" style="width: 100%; height: 100%;" />').appendTo( articleContent );
-            if( typeof( callback ) == "function" )
-                callback();
+
+    if( articleContent.has( 'iframe' ).length ) {
+        articleContent.children().remove();
+console.info( 'remove iframe' );
+        return;
+    }
+
+    entry.addClass('article__content--website js-website');
+    if( entry.hasClass('js-focus') ) {
+        var iframeLoadingId = 'iframe-loading',
+            iframeId = 'entry-iframe-' + entry.data('id');
+        articleContent.append( '<img src="plugins/LeedRSSOrSiteView/img/leed-logo.png" class="iframe-loader" alt="Loading..." id="' + iframeLoadingId + '" />' );
+
+        jQuery('<iframe id="' + iframeId + '" frameborder="0" src="' + articleContent.data('article-url') + '" style="position: relative; width: 100%; height: 100%; z-index: 10;" />').appendTo( articleContent );
+        $( '#' + iframeId ).load(function () {
+            $( '#' + iframeLoadingId ).remove();
+        });
+
+        if( typeof( callback ) == "function" ) {
+            callback();
         }
-    } else {
-        articleContent.children('iframe').remove();
     }
 }
 
-// [todo] - Get RSS content instead of this show/hide trick
 function toggleRSS( element ) {
-    var entry = element.parents('.js-feed__entry'),
-        content = entry.find('.js-article__content'),
-        contentIframe = content.find( 'iframe' );
-    
-    if( contentIframe.length > 0 )
-        contentIframe.remove();
+    var entry = element.parents('.js-feed__entry');
     
     entry.removeClass('article__content--website js-website');
+    eventObj.toggleContent();
 }
 
 // [todo] - Create a general object to avoid these repetitive node switches
 function toggleView( element, view ) {
-    var entry = element.parents('.js-feed__entry');
+    var entry = element.parents('.js-feed__entry'),
+        articleContent = entry.find('.js-article__content');
+    articleContent.children().remove();
 
     $( '[data-feed-id="' + entry.data('feed-id') + '"]' ).each(function() {
         if( view == 1 ) {
@@ -76,10 +84,6 @@ function toggleView( element, view ) {
             toggleRSS( $(this).children() );
         }
     });
-    
-    if( view == 0 ) {
-        toggleContent( entry.data('id'), element );
-    }
 }
 
 //
