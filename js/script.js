@@ -9,7 +9,7 @@ $('document').ready(function(){
         iframeHeight = $(window).height() - $('.article__header').height() - 20;
     addCSSRule(
         firstSheet,
-        ".article__content--website .article__content",
+        ".event--website-view .article__content",
         "height: " + iframeHeight + "px"
     );
 
@@ -47,7 +47,7 @@ console.info( 'remove iframe' );
         return;
     }
 
-    entry.addClass('article__content--website js-website');
+    entry.addClass('event--website-view js-website');
     if( entry.hasClass('js-focus') ) {
         var iframeLoadingId = 'iframe-loading',
             iframeId = 'entry-iframe-' + entry.data('id');
@@ -67,7 +67,7 @@ console.info( 'remove iframe' );
 function toggleRSS( element ) {
     var entry = element.parents('.js-event');
     
-    entry.removeClass('article__content--website js-website');
+    entry.removeClass('event--website-view js-website');
     eventObj.toggleContent();
 }
 
