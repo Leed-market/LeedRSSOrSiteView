@@ -17,7 +17,7 @@ $('document').ready(function(){
 
 function switchFeedView(element) {
     var newRssOrSiteView = + ! element.data('view'),
-        entry = element.parents('.js-feed__entry');
+        entry = element.parents('.js-event');
 
     $.ajax({
         url: "./plugins/LeedRSSOrSiteView/update_view.php",
@@ -38,7 +38,7 @@ function switchFeedView(element) {
 
 // Create the site iframe
 function toggleWebsite( element, callback ) {
-    var entry = element.parents('.js-feed__entry'),
+    var entry = element.parents('.js-event'),
         articleContent = entry.find('.js-article__content');
 
     if( articleContent.has( 'iframe' ).length ) {
@@ -65,7 +65,7 @@ console.info( 'remove iframe' );
 }
 
 function toggleRSS( element ) {
-    var entry = element.parents('.js-feed__entry');
+    var entry = element.parents('.js-event');
     
     entry.removeClass('article__content--website js-website');
     eventObj.toggleContent();
@@ -73,7 +73,7 @@ function toggleRSS( element ) {
 
 // [todo] - Create a general object to avoid these repetitive node switches
 function toggleView( element, view ) {
-    var entry = element.parents('.js-feed__entry'),
+    var entry = element.parents('.js-event'),
         articleContent = entry.find('.js-article__content');
     articleContent.children().remove();
 
