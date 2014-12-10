@@ -47,7 +47,7 @@ console.info( 'remove iframe' );
         return;
     }
 
-    entry.addClass('event--website-view js-website');
+    entry.addClass('event--website-view js-website-view');
     if( entry.hasClass('js-focus') ) {
         var iframeLoadingId = 'iframe-loading',
             iframeId = 'entry-iframe-' + entry.data('id');
@@ -67,7 +67,7 @@ console.info( 'remove iframe' );
 function toggleRSS( element ) {
     var entry = element.parents('.js-event');
     
-    entry.removeClass('event--website-view js-website');
+    entry.removeClass('event--website-view js-website-view');
     eventObj.toggleContent();
 }
 
