@@ -1,23 +1,23 @@
 <?php
 
-class RSSOrFeedView {
+class RSSOrFeedView extends MysqlEntity {
 
     protected $table_name = 'plugin_leedrssorsiteview';
 
     public function getView($feed_id) {
-        $result = mysql_query('
+        $result = $this->dbconnector->connection->query('
             SELECT id, view FROM `' . MYSQL_PREFIX . $this->table_name . '`
             WHERE `id` = ' . $feed_id . '
         ');
-        
+
         if($result) {
-            $row = mysql_fetch_assoc($result);
+            $row = $result->fetch_assoc();
             return $row['view'];
         }
     }
 
     public function setView($id, $view) {
-        $result = mysql_query('
+        $result = $this->dbconnector->connection->query('
             UPDATE ' . MYSQL_PREFIX . $this->table_name . ' 
             SET `view`="' . $view . '"
             WHERE `id`="' . $id . '";
@@ -27,14 +27,14 @@ class RSSOrFeedView {
     }
 
     public function install() {
-        mysql_query('
+        $this->dbconnector->connection->query('
             CREATE TABLE IF NOT EXISTS `' . MYSQL_PREFIX . $this->table_name . '` (
               `id` int(11) NOT NULL,
               `view` int(1) NOT NULL
             ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
         ');
 
-        mysql_query('
+        $this->dbconnector->connection->query('
             INSERT INTO `' . MYSQL_PREFIX . $this->table_name . '`(
                   id,
                   view )
@@ -45,7 +45,7 @@ class RSSOrFeedView {
     }
 
     public function uninstall() {
-        mysql_query( 'DROP TABLE ' . MYSQL_PREFIX . $this->table_name );
+        $this->destroy();
     }
 
 }
