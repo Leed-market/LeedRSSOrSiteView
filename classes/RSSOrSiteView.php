@@ -18,9 +18,9 @@ class RSSOrFeedView extends MysqlEntity {
 
     public function setView($id, $view) {
         $result = $this->dbconnector->connection->query('
-            UPDATE ' . MYSQL_PREFIX . $this->table_name . ' 
-            SET `view`="' . $view . '"
-            WHERE `id`="' . $id . '";
+            INSERT INTO ' . MYSQL_PREFIX . $this->table_name . '
+            (id, view) VALUES (' . $id . ', ' . $view . ')
+            ON DUPLICATE KEY UPDATE `view`=VALUES(view);
         ');
 
         return $result ? true : false;
@@ -29,8 +29,9 @@ class RSSOrFeedView extends MysqlEntity {
     public function install() {
         $this->dbconnector->connection->query('
             CREATE TABLE IF NOT EXISTS `' . MYSQL_PREFIX . $this->table_name . '` (
-              `id` int(11) NOT NULL,
-              `view` int(1) NOT NULL
+              `id` int(11) NOT NULL PRIMARY KEY CONSTRAINT id UNIQUE,
+              `view` int(1) NOT NULL,
+              PRIMARY KEY (`id`)
             ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
         ');
 
