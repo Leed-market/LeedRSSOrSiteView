@@ -41,13 +41,6 @@ function toggleWebsite( element, callback ) {
     var entry = element.parents('.js-event'),
         articleContent = entry.find('.js-article__content');
 
-    if( articleContent.has( 'iframe' ).length ) {
-        articleContent.children().remove();
-console.info( 'remove iframe' );
-        return;
-    }
-
-    entry.addClass('event--website-view js-website-view');
     if( entry.hasClass('js-focus') ) {
         var iframeLoadingId = 'iframe-loading',
             iframeId = 'entry-iframe-' + entry.data('id');
@@ -64,26 +57,32 @@ console.info( 'remove iframe' );
     }
 }
 
-function toggleRSS( element ) {
-    var entry = element.parents('.js-event');
-    
-    entry.removeClass('event--website-view js-website-view');
-    eventObj.toggleContent();
+function toggleRSSOrSiteClasses( events, action ) {
+    var classes = 'event--website-view js-website-view';
+    if( action === 'remove' ) {
+        events.each( function() {
+            $(this).removeClass( classes );
+        });
+    } else {
+        events.each( function() {
+            $(this).addClass( classes );
+        });
+    }
 }
 
 // [todo] - Create a general object to avoid these repetitive node switches
 function toggleView( element, view ) {
     var entry = element.parents('.js-event'),
-        articleContent = entry.find('.js-article__content');
-    articleContent.children().remove();
-
-    $( '[data-feed-id="' + entry.data('feed-id') + '"]' ).each(function() {
-        if( view == 1 ) {
-            toggleWebsite( $(this).children() );
-        } else {
-            toggleRSS( $(this).children() );
-        }
-    });
+        eventContent = entry.find( '.js-article__content' ),
+        allEvents = $( '[data-feed-id="' + entry.data('feed-id') + '"]' );
+    eventContent.children().remove();
+    if( view == 1 ) {
+        toggleWebsite( eventContent );
+        toggleRSSOrSiteClasses( allEvents );
+    } else {
+        eventObj.toggleContent();
+        toggleRSSOrSiteClasses( allEvents, 'remove' );
+    }
 }
 
 //
