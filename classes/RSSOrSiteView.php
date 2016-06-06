@@ -2,11 +2,11 @@
 
 class RSSOrFeedView extends MysqlEntity {
 
-    protected $table_name = 'plugin_leedrssorsiteview';
+    protected $TABLE_NAME = 'plugin_leedrssorsiteview';
 
     public function getView($feed_id) {
         $result = $this->dbconnector->connection->query('
-            SELECT id, view FROM `' . MYSQL_PREFIX . $this->table_name . '`
+            SELECT id, view FROM `' . MYSQL_PREFIX . $this->TABLE_NAME . '`
             WHERE `id` = ' . $feed_id . '
         ');
 
@@ -18,7 +18,7 @@ class RSSOrFeedView extends MysqlEntity {
 
     public function setView($id, $view) {
         $result = $this->dbconnector->connection->query('
-            INSERT INTO ' . MYSQL_PREFIX . $this->table_name . '
+            INSERT INTO ' . MYSQL_PREFIX . $this->TABLE_NAME . '
             (id, view) VALUES (' . $id . ', ' . $view . ')
             ON DUPLICATE KEY UPDATE `view`=VALUES(view);
         ');
@@ -28,7 +28,7 @@ class RSSOrFeedView extends MysqlEntity {
 
     public function install() {
         $this->dbconnector->connection->query('
-            CREATE TABLE IF NOT EXISTS `' . MYSQL_PREFIX . $this->table_name . '` (
+            CREATE TABLE IF NOT EXISTS `' . MYSQL_PREFIX . $this->TABLE_NAME . '` (
               `id` int(11) NOT NULL PRIMARY KEY CONSTRAINT id UNIQUE,
               `view` int(1) NOT NULL,
               PRIMARY KEY (`id`)
@@ -36,7 +36,7 @@ class RSSOrFeedView extends MysqlEntity {
         ');
 
         $this->dbconnector->connection->query('
-            INSERT INTO `' . MYSQL_PREFIX . $this->table_name . '`(
+            INSERT INTO `' . MYSQL_PREFIX . $this->TABLE_NAME . '`(
                   id,
                   view )
             SELECT `id`,
