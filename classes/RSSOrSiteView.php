@@ -26,21 +26,35 @@ class RSSOrFeedView extends MysqlEntity {
         return $result ? true : false;
     }
 
-    public function install() {
+    public function addView($feedId) {
         $this->dbconnector->connection->query('
+            INSERT INTO `' . MYSQL_PREFIX . $this->TABLE_NAME . '`
+            ( id )
+            VALUES(' . $feedId . ');
+        ');
+    }
+
+    public function removeView($feedId) {
+        $this->dbconnector->connection->query('
+            DELETE FROM `' . MYSQL_PREFIX . $this->TABLE_NAME . '`
+            WHERE id=' . $feedId . ';
+        ');
+    }
+
+    public function install() {
+        $query = '
             CREATE TABLE IF NOT EXISTS `' . MYSQL_PREFIX . $this->TABLE_NAME . '` (
-              `id` int(11) NOT NULL PRIMARY KEY CONSTRAINT id UNIQUE,
-              `view` int(1) NOT NULL,
+              `id` int(11),
+              `view` int(1) DEFAULT 0,
               PRIMARY KEY (`id`)
             ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-        ');
+        ';
+        $this->dbconnector->connection->query($query);
 
         $this->dbconnector->connection->query('
             INSERT INTO `' . MYSQL_PREFIX . $this->TABLE_NAME . '`(
-                  id,
-                  view )
-            SELECT `id`,
-                   \'0\'
+                  id)
+            SELECT `id`
             FROM `' . MYSQL_PREFIX . 'feed`;
         ');
     }

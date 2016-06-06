@@ -15,8 +15,20 @@ function leedrssorsiteview_plugin_getView(&$event) {
     $event->view = $rss_or_feed_view->getView($event->getFeed());
 }
 
+function leedrssorsiteview_plugin_addView(&$newFeed) {
+    $rss_or_feed_view = new RSSOrFeedView();
+    $rss_or_feed_view->addView($newFeed->getId());
+}
+
+function leedrssorsiteview_plugin_removeView($feedId) {
+    $rss_or_feed_view = new RSSOrFeedView();
+    $rss_or_feed_view->removeView($feedId);
+}
+
 Plugin::addCss("/css/style.css");
 Plugin::addJs("/js/script.js");
 
 Plugin::addHook("event_pre_section", "leedrssorsiteview_plugin_getView");
+Plugin::addHook("action_after_addFeed", "leedrssorsiteview_plugin_addView");
+Plugin::addHook("action_after_removeFeed", "leedrssorsiteview_plugin_removeView");
 ?>
