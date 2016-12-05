@@ -19,7 +19,7 @@ If the theme that you are using handles this plugin, you can switch the view cli
 
 ## Install
 
-1. Download [LeedRSSOrSiteView](archive/master.zip) into the `plugins` folder of Leed
+1. Download [LeedRSSOrSiteView](https://github.com/Simounet/LeedRSSOrSiteView/archive/dev.zip) into the `plugins` folder of Leed
 2. Activate `LeedRSSOrSiteView` from the settings page
 
 ## Uninstall
