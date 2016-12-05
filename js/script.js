@@ -37,9 +37,13 @@ function switchFeedView(element) {
 }
 
 // Create the site iframe
-function toggleWebsite( element, callback ) {
+function toggleWebsite( element, removeIframe, callback ) {
     var entry = element.parents('.js-event'),
         articleContent = entry.find('.js-article__content');
+
+    if( removeIframe ) {
+        element.children().remove();
+    }
 
     if( entry.hasClass('js-focus') ) {
         var iframeLoadingId = 'iframe-loading',
