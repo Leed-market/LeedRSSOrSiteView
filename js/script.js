@@ -3,14 +3,6 @@ $('document').ready(function () {
         event.preventDefault();
         switchFeedView($(this));
     });
-
-    var firstSheet = document.styleSheets[0];
-    var iframeHeight = $(window).height() - $('.article__header').height() - 20;
-    addCSSRule(
-        firstSheet,
-        '.event--website-view .article__content',
-        'height: ' + iframeHeight + 'px'
-    );
 });
 
 function switchFeedView (element) {
@@ -83,20 +75,5 @@ function toggleView (element, view) {
     } else {
         eventObj.toggleContent();
         toggleRSSOrSiteClasses(allEvents, 'remove');
-    }
-}
-
-//
-// TOOLS
-//
-function addCSSRule (sheet, selector, rules, index) {
-    if (index === undefined) {
-        index = sheet.cssRules.length;
-    }
-
-    if ('insertRule' in sheet) {
-        sheet.insertRule(selector + '{' + rules + '}', index);
-    } else if ('addRule' in sheet) {
-        sheet.addRule(selector, rules, index);
     }
 }

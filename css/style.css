@@ -8,6 +8,10 @@
   animation: iframe-loading 3s infinite;
 }
 
+.event--website-view .article__content {
+    height: 93vh;
+}
+
 @-moz-keyframes iframe-loading {
   from {
     transform: rotate(0);
