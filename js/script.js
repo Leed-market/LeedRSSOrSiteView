@@ -37,7 +37,7 @@ function toggleWebsite (element, removeIframe, callback) {
     if (entry.hasClass('js-focus')) {
         var iframeLoadingId = 'iframe-loading';
         var iframeId = 'entry-iframe-' + entry.data('id');
-        articleContent.append('<img src="plugins/LeedRSSOrSiteView/img/leed-logo.png" class="iframe-loader" alt="Loading..." id="' + iframeLoadingId + '" />');
+        articleContent.append('<img src="plugins/LeedRSSOrSiteView/img/leed-logo.svg" class="iframe-loader" alt="Loading..." id="' + iframeLoadingId + '" />');
 
         jQuery('<iframe id="' + iframeId + '" frameborder="0" src="' + articleContent.data('article-url') + '" style="position: relative; width: 100%; height: 100%; z-index: 10;" />').appendTo(articleContent);
         $('#' + iframeId).load(function () {
