@@ -3,7 +3,7 @@
 @name LeedRSSOrSiteView
 @author Simounet <contact@simounet.net>
 @link http://www.simounet.net
-@licence WTFPL
+@licence MIT
 @version 1.0.0
 @description Allow us to choose the view (RSS or website) for each feed
 */
