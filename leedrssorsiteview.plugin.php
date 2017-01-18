@@ -12,7 +12,7 @@ include( __DIR__ . '/classes/RSSOrSiteView.php' );
 
 function leedrssorsiteview_plugin_getView(&$event) {
     $rss_or_feed_view = new RSSOrFeedView();
-    $event->view = $rss_or_feed_view->getView($event->getFeed());
+    $event->view = $rss_or_feed_view->getView($event);
 }
 
 function leedrssorsiteview_plugin_addView(&$newFeed) {

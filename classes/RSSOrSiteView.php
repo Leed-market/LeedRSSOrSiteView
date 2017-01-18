@@ -4,10 +4,15 @@ class RSSOrFeedView extends MysqlEntity {
 
     protected $TABLE_NAME = 'plugin_leedrssorsiteview';
 
-    public function getView($feed_id) {
+    public function getView($event) {
+        $secureProtocolAsked = $_SERVER['REQUEST_SCHEME'] === 'https';
+        $eventUrlNotSecure = strpos($event->getLink(), 'http:') === 0;
+        if($secureProtocolAsked && $eventUrlNotSecure ) {
+            return 0;
+        }
         $result = $this->dbconnector->connection->query('
             SELECT id, view FROM `' . MYSQL_PREFIX . $this->TABLE_NAME . '`
-            WHERE `id` = ' . $feed_id . '
+            WHERE `id` = ' . $event->getFeed() . '
         ');
 
         if($result) {
