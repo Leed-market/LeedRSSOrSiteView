@@ -20,6 +20,14 @@ function leedrssorsiteview_plugin_addView(&$newFeed) {
     $rss_or_feed_view->addView($newFeed->getId());
 }
 
+function leedrssorsiteview_plugin_updateView($_, $myUser) {
+    if(!isset($_['plugin-action']) && $_['plugin-action'] === 'leedrssorsiteview_update_view') {
+        return false;
+    }
+    $rss_or_feed_view = new RSSOrFeedView();
+    $rss_or_feed_view->updateView($_['id'], $_['view']);
+}
+
 function leedrssorsiteview_plugin_removeView($feedId) {
     $rss_or_feed_view = new RSSOrFeedView();
     $rss_or_feed_view->removeView($feedId);
@@ -30,5 +38,6 @@ Plugin::addJs("/js/script.js");
 
 Plugin::addHook("event_pre_section", "leedrssorsiteview_plugin_getView");
 Plugin::addHook("action_after_addFeed", "leedrssorsiteview_plugin_addView");
+Plugin::addHook("action_post_case", "leedrssorsiteview_plugin_updateView");
 Plugin::addHook("action_after_removeFeed", "leedrssorsiteview_plugin_removeView");
 ?>

@@ -39,6 +39,11 @@ class RSSOrFeedView extends MysqlEntity {
         ');
     }
 
+    public function updateView($feedId, $view) {
+        $update = $this->setView($feedId, $view);
+        echo json_encode($update);
+    }
+
     public function removeView($feedId) {
         $this->dbconnector->connection->query('
             DELETE FROM `' . MYSQL_PREFIX . $this->TABLE_NAME . '`

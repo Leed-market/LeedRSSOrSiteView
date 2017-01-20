@@ -10,8 +10,12 @@ function switchFeedView (element) {
     var entry = element.parents('.js-event');
 
     $.ajax({
-        url: './plugins/LeedRSSOrSiteView/update_view.php',
-        data: { id: entry.data('feed-id'), view: newRssOrSiteView }
+        url: './action.php',
+        data: {
+            pluginAction: 'leedrssorsiteview_update_view',
+            id: entry.data('feed-id'),
+            view: newRssOrSiteView
+        }
     })
         .done(function () {
             var newRssOrSiteViewText = (newRssOrSiteView === 1) ? 'RSS_VIEW' : 'SITE_VIEW';
